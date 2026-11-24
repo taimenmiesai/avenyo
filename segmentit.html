@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avenyo – asiakassegmentit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2EE}
+a{color:#2447D6}a:hover{color:#1A33A0}
+button{font:inherit}
+</style>
+<script src="assets/runtime.js" defer></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<template id="dc-tpl">
+
+<div style="min-height: 100vh; background: #F4F2EE; color: #111218; font-family: Inter, system-ui, sans-serif; box-sizing: border-box">
+
+<header style="background: #111218; color: #FFFFFF">
+<div style="max-width: 1320px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
+<div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap">
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.12em">AVENYO</div>
+<div style="font-size: 13px; color: #B8BAC4">Asiakasdatan käyttöjärjestelmä</div>
+</div>
+<nav aria-label="Päävalikko" style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="index.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Yleiskuva</a>
+<a href="segmentit.html" aria-current="page" style="color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 14px; border-radius: 999px; background: #2A2C36">Asiakkaat</a>
+<a href="aikakone.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Aikakone</a>
+<a href="kohdeyleiso.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kohdeyleisöt</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kampanjat</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Raportit</a>
+</nav>
+<div style="font-size: 13px; color: #D6D7DD; border: 1px solid #3A3C47; border-radius: 999px; padding: 10px 14px">1.–30.11.2026</div>
+</div>
+</header>
+
+<main style="max-width: 1320px; margin: 0 auto; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 24px; box-sizing: border-box">
+
+<nav aria-label="Murupolku" style="font-size: 14px; color: #5B5D66; display: flex; gap: 8px; flex-wrap: wrap">
+<a href="index.html" style="text-decoration: none">Yleiskuva</a><span aria-hidden="true">/</span><span>Asiakkaat</span><span aria-hidden="true">/</span><span style="color: #111218; font-weight: 600">Segmentit</span>
+</nav>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">CRM · KANTA-ASIAKKAAT</div>
+<h1 style="margin: 6px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 40px; line-height: 1.1; font-weight: 700">Asiakassegmentit</h1>
+</div>
+<div style="font-size: 14px; color: #5B5D66">48 210 aktiivista kanta-asiakasta</div>
+</div>
+
+<div role="group" aria-label="Valitse segmentti" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px">
+<template data-sc="for" list="{{ tabs }}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{ t.pick }}" aria-pressed="{{ t.on }}" style="{{ t.style }}">
+<span style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">{{ t.label }}</span>
+<span style="{{ t.dot }}"></span>
+</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em">{{ t.size }}</span>
+<span style="font-size: 13px; color: #5B5D66">{{ t.def }}</span>
+</button>
+</template>
+</div>
+
+<section aria-label="Toiminnot" style="background: #FFFFFF; border: 2px solid #111218; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">TOIMINNOT</div>
+<div style="font-size: 15px; font-weight: 600; margin-top: 2px">{{ act.context }}</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<template data-sc="for" list="{{ actBtns }}" as="b" hint-placeholder-count="3">
+<button type="button" onClick="{{ b.pick }}" aria-pressed="{{ b.on }}" aria-expanded="{{ b.on }}" style="{{ b.style }}">
+<template data-sc="if" value="{{ b.isA }}" hint-placeholder-val="{{ true }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>
+</template>
+<template data-sc="if" value="{{ b.isB }}" hint-placeholder-val="{{ false }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5"></circle></svg>
+</template>
+<template data-sc="if" value="{{ b.isC }}" hint-placeholder-val="{{ false }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.5"></circle><path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"></path><circle cx="16.5" cy="8" r="3" stroke-dasharray="2 2"></circle><path d="M16 14.6c3.2 0 6 2 6 5.4" stroke-dasharray="2 2"></path></svg>
+</template>
+<span>{{ b.label }}</span>
+</button>
+</template>
+</div>
+</div>
+<template data-sc="if" value="{{ act.open }}" hint-placeholder-val="{{ false }}">
+<div style="border-top: 1px solid #ECEAE4; padding-top: 14px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: flex-start">
+<div style="flex: 1 1 360px; min-width: 0">
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ act.title }}</h3>
+<p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #3A3C47">{{ act.desc }}</p>
+</div>
+<button type="button" aria-label="Sulje" onClick="{{ act.close }}" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; color: #111218; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+</button>
+</div>
+<template data-sc="if" value="{{ act.isLa }}" hint-placeholder-val="{{ false }}">
+<div role="group" aria-label="Samankaltaisuus" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap">
+<span style="font-size: 14px; font-weight: 600; margin-right: 4px">Samankaltaisuus</span>
+<template data-sc="for" list="{{ laOpts }}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="{{ o.style }}">{{ o.label }}</button>
+</template>
+<span style="font-size: 13px; color: #5B5D66">1 % = lähimmät, 5 % = laajin tavoittavuus</span>
+</div>
+</template>
+<dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px">
+<template data-sc="for" list="{{ act.rows }}" as="r" hint-placeholder-count="4">
+<div style="background: #F8F7F3; border-radius: 10px; padding: 10px 12px">
+<dt style="font-size: 12px; color: #5B5D66">{{ r.k }}</dt>
+<dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px; line-height: 1.4">{{ r.v }}</dd>
+</div>
+</template>
+</dl>
+<template data-sc="if" value="{{ act.done }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; gap: 10px; align-items: center; background: #E6EBFF; color: #1D3FC4; border-radius: 12px; padding: 12px 14px; font-weight: 600; font-size: 14px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17 19 7"></path></svg>
+<span>{{ act.doneText }}</span>
+</div>
+</template>
+<template data-sc="if" value="{{ act.notDone }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{ act.confirm }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 0; background: #2447D6; color: #FFFFFF; cursor: pointer; font-weight: 700; font-size: 15px">{{ act.confirmLabel }}</button>
+<button type="button" onClick="{{ act.close }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; color: #111218; cursor: pointer; font-weight: 600; font-size: 15px">Peruuta</button>
+</div>
+</template>
+</div>
+</template>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700">{{ seg.label }}</h2>
+<p style="margin: 4px 0 0; font-size: 15px; color: #3A3C47">{{ seg.desc }}</p>
+</div>
+<span style="{{ seg.chip }}">{{ seg.def }}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px">
+<template data-sc="for" list="{{ seg.kpis }}" as="k" hint-placeholder-count="5">
+<div style="background: #F8F7F3; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; color: #5B5D66">{{ k.label }}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700">{{ k.value }}</span>
+</div>
+</template>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 16px">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Segmentin koko viikoittain</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">{{ seg.trend }}</div>
+</div>
+<div role="img" aria-label="{{ seg.trendAria }}" style="display: flex; align-items: flex-end; gap: 8px; height: 200px; border-bottom: 1px solid #D9D6CE; padding-top: 10px">
+<template data-sc="for" list="{{ bars }}" as="b" hint-placeholder-count="12">
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%">
+<span style="font-size: 11px; color: #5B5D66">{{ b.label }}</span>
+<div style="{{ b.style }}"></div>
+</div>
+</template>
+</div>
+<div style="display: flex; gap: 8px; font-size: 12px; color: #5B5D66">
+<template data-sc="for" list="{{ weeks }}" as="w" hint-placeholder-count="12"><span style="flex: 1; text-align: center">{{ w }}</span></template>
+</div>
+</div>
+
+<div style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Lempiateriat</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">Osuus segmentin ostoista</div>
+</div>
+<template data-sc="for" list="{{ meals }}" as="m" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 48px; height: 40px; flex: none; border-radius: 10px; background: #FBF4E8; display: flex; align-items: center; justify-content: center">
+<svg width="36" height="28" viewBox="0 0 72 56" aria-hidden="true">
+<path d="M8 24 C8 11 21 4 36 4 C51 4 64 11 64 24 Z" fill="#E6A03A"></path>
+<path d="M5 27 Q11 23 17 27 T29 27 T41 27 T53 27 T67 27 L67 30 L5 30 Z" fill="{{ m.leaf }}"></path>
+<path d="M8 30 H64 L57 36 L50 30 Z" fill="{{ m.cheese }}"></path>
+<rect x="7" y="31" width="58" height="9" rx="4.5" fill="{{ m.patty }}"></rect>
+<path d="M8 42 H64 V45 C64 49.5 60.5 52 56 52 H16 C11.5 52 8 49.5 8 45 Z" fill="#D2872B"></path>
+</svg>
+</div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">{{ m.name }}</span><span>{{ m.pct }} %</span></div>
+<div style="height: 8px; border-radius: 999px; background: #F0EEE9; overflow: hidden"><div style="{{ m.bar }}"></div></div>
+</div>
+</div>
+</template>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Asiakkaat, korkein churn-riski ensin</h2>
+<span style="font-size: 13px; color: #5B5D66">Näytetään 4 / {{ seg.size }}</span>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 820px; border-collapse: collapse; font-size: 14px">
+<thead>
+<tr style="text-align: left; color: #5B5D66; font-size: 13px">
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA">Asiakas</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA">Taso</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA">Viimeisin osto</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA">Ostoja 12 kk</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA">CLV-ennuste 12 kk</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA; width: 200px">Churn-riski</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600; border-bottom: 1px solid #E4E1DA"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Toiminto</span></th>
+</tr>
+</thead>
+<tbody>
+<template data-sc="for" list="{{ rows }}" as="c" hint-placeholder-count="4">
+<tr>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 36px; height: 36px; border-radius: 999px; background: #EDEBE5; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">{{ c.initials }}</span>
+<span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{ c.name }}</span><span style="font-size: 12px; color: #5B5D66">{{ c.id }}</span></span>
+</div>
+</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">{{ c.tier }}</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">{{ c.last }}</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">{{ c.purchases }}</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">{{ c.clv }}</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9">
+<div style="display: flex; align-items: center; gap: 10px">
+<div style="flex: 1; height: 8px; border-radius: 999px; background: #F0EEE9; overflow: hidden"><div style="{{ c.bar }}"></div></div>
+<span style="font-weight: 600; min-width: 40px; text-align: right">{{ c.churn }} %</span>
+</div>
+</td>
+<td style="padding: 12px; border-bottom: 1px solid #F0EEE9; text-align: right">
+<a href="aikakone.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid #C9CCDA; text-decoration: none; font-weight: 600; white-space: nowrap; box-sizing: border-box">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Aikakone</a>
+</td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+</section>
+
+<section style="background: #111218; color: #FFFFFF; border-radius: 16px; padding: 24px 26px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #B8BAC4">SUOSITELTU KAMPANJA</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">{{ seg.campaign }}</div>
+<div style="font-size: 14px; color: #D6D7DD">{{ seg.expected }}</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a href="#" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #FFFFFF; color: #111218; text-decoration: none; font-weight: 600">Luo kampanja</a>
+<a href="#" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #4A4C58; color: #FFFFFF; text-decoration: none; font-weight: 600">Vie yleisö</a>
+</div>
+</section>
+
+<div style="font-size: 12px; color: #5B5D66">Demodata – luvut ja asiakkaat ovat keksittyjä esimerkkejä.</div>
+</main>
+</div>
+</template>
+<script type="text/plain" id="dc-logic" data-props='{"startSegment":{"editor":"enum","options":["loyal","active","fading","new"],"default":"fading"},"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var key = st.seg || this.props.startSegment || 'fading';
+    var S = {
+      loyal: { label: 'Uskolliset', size: '14 800', color: '#2447D6', def: 'Vähintään 4 ostoa / kk',
+        desc: 'Ostavat vähintään kerran viikossa ja ovat jäsenohjelman ydin.',
+        kpis: [['Asiakkaita', '14 800'], ['Keskiostos', '13,60 €'], ['Ostoja / kk', '4,8'], ['CLV-ennuste 12 kk', '640 €'], ['Churn-riski keskim.', '4 %']],
+        trend: [13.1, 13.3, 13.4, 13.6, 13.7, 13.9, 14.0, 14.2, 14.3, 14.5, 14.6, 14.8], trendText: 'Kasvanut 1 700 asiakkaalla 12 viikossa',
+        meals: [34, 30, 18, 10, 8],
+        rows: [['Mikko H.', 'A-10288', 'Kulta', '23.11.2026', 61, '980 €', 3], ['Aino V.', 'A-22410', 'Kulta', '22.11.2026', 54, '860 €', 4], ['Pekka L.', 'A-19077', 'Kulta', '21.11.2026', 49, '790 €', 6], ['Emma S.', 'A-30561', 'Hopea', '20.11.2026', 47, '720 €', 7]],
+        campaign: 'Kulta-tason yllätysetu: jälkiruoka kaupan päälle joka 10. ostolla', expected: 'Ennuste: ostotiheys +3 % · 21 000 € lisämyyntiä / kk' },
+      active: { label: 'Aktiiviset', size: '19 300', color: '#0F7B6C', def: '1–3 ostoa / kk',
+        desc: 'Ostavat säännöllisesti, mutta harvemmin kuin uskolliset.',
+        kpis: [['Asiakkaita', '19 300'], ['Keskiostos', '12,20 €'], ['Ostoja / kk', '2,1'], ['CLV-ennuste 12 kk', '290 €'], ['Churn-riski keskim.', '11 %']],
+        trend: [18.2, 18.3, 18.3, 18.5, 18.6, 18.6, 18.8, 18.9, 19.0, 19.1, 19.2, 19.3], trendText: 'Kasvanut 1 100 asiakkaalla 12 viikossa',
+        meals: [31, 26, 24, 12, 7],
+        rows: [['Ville N.', 'A-41022', 'Hopea', '9.11.2026', 18, '310 €', 22], ['Riikka T.', 'A-38870', 'Hopea', '11.11.2026', 21, '340 €', 19], ['Oskari J.', 'A-45109', 'Pronssi', '12.11.2026', 15, '250 €', 17], ['Heidi K.', 'A-40233', 'Hopea', '14.11.2026', 23, '360 €', 14]],
+        campaign: 'Tuplapisteet arki-iltaisin klo 17–20', expected: 'Ennuste: 2 900 asiakasta nousee Uskollisiin · 38 000 € lisämyyntiä / kk' },
+      fading: { label: 'Hiipuvat', size: '8 000', color: '#D9481F', def: 'Ei ostoa 30–90 päivään',
+        desc: 'Ostotiheys on laskenut selvästi viimeisen 90 päivän aikana. Segmentti kasvaa.',
+        kpis: [['Asiakkaita', '8 000'], ['Keskiostos', '11,40 €'], ['Ostoja / kk', '0,6'], ['CLV-ennuste 12 kk', '96 €'], ['Churn-riski keskim.', '58 %']],
+        trend: [6.1, 6.2, 6.4, 6.5, 6.7, 6.9, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0], trendText: 'Kasvanut 1 900 asiakkaalla 12 viikossa – toimenpiteitä tarvitaan',
+        meals: [38, 21, 22, 9, 10],
+        rows: [['Laura K.', 'A-48213', 'Hopea', '21.10.2026', 14, '99 €', 72], ['Teemu R.', 'A-60442', 'Pronssi', '27.9.2026', 6, '64 €', 69], ['Jari M.', 'A-31907', 'Pronssi', '4.10.2026', 9, '80 €', 64], ['Sanna P.', 'A-55021', 'Hopea', '19.10.2026', 11, '120 €', 55]],
+        campaign: 'Ikävä sinua: Klassikko-ateria 6,90 € seuraavat 7 päivää', expected: 'Ennuste: 1 450 asiakasta palaa · 64 000 € lisämyyntiä 3 kk:ssa' },
+      fresh: null,
+      new: { label: 'Uudet', size: '6 110', color: '#7A3FC4', def: 'Liittynyt alle 60 pv sitten',
+        desc: 'Liittyneet jäsenohjelmaan viimeisen 60 päivän aikana.',
+        kpis: [['Asiakkaita', '6 110'], ['Keskiostos', '10,80 €'], ['Ostoja / kk', '1,3'], ['CLV-ennuste 12 kk', '180 €'], ['Churn-riski keskim.', '24 %']],
+        trend: [4.2, 4.4, 4.5, 4.7, 4.9, 5.0, 5.2, 5.4, 5.6, 5.7, 5.9, 6.1], trendText: 'Kasvanut 1 900 asiakkaalla 12 viikossa',
+        meals: [29, 22, 27, 14, 8],
+        rows: [['Noora A.', 'A-70114', 'Pronssi', '2.11.2026', 1, '70 €', 41], ['Elias P.', 'A-70560', 'Pronssi', '5.11.2026', 2, '110 €', 33], ['Iida M.', 'A-71022', 'Pronssi', '10.11.2026', 2, '130 €', 27], ['Leo H.', 'A-71309', 'Pronssi', '16.11.2026', 3, '160 €', 21]],
+        campaign: 'Tervetulosarja: 3 viestiä ja toisen oston etu', expected: 'Ennuste: toisen oston aste 48 % → 61 %' }
+    };
+    var order = ['loyal', 'active', 'fading', 'new'];
+    var seg = S[key];
+    var c = seg.color;
+    var tabs = order.map(function (k) {
+      var s = S[k]; var on = k === key;
+      return { label: s.label, size: s.size, def: s.def, on: on,
+        pick: function () { self.setState({ seg: k }); },
+        dot: 'width: 12px; height: 12px; border-radius: 999px; background: ' + s.color,
+        style: 'display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 16px; cursor: pointer; color: #111218; text-align: left; ' +
+          (on ? 'background: #FFFFFF; border: 2px solid ' + s.color + '; box-shadow: 0 6px 20px rgba(17,18,24,0.08)' : 'background: #FBFAF7; border: 2px solid #E4E1DA') };
+    });
+    var mx = Math.max.apply(null, seg.trend), mn = Math.min.apply(null, seg.trend);
+    var bars = seg.trend.map(function (v, i) {
+      var h = 30 + ((v - mn) / (mx - mn || 1)) * 120;
+      return { label: String(v).replace('.', ','), style: 'width: 100%; max-width: 44px; border-radius: 8px 8px 2px 2px; height: ' + h.toFixed(0) + 'px; background: ' + c + '; opacity: ' + (i === 11 ? 1 : 0.55) };
+    });
+    var base = [
+      { name: 'Klassikko-ateria', patty: '#7A4A2A', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Tupla juusto', patty: '#6A3D22', cheese: '#F2B81C', leaf: '#5E9E3E' },
+      { name: 'Crispy kana', patty: '#D9A23F', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Vege-ateria', patty: '#4F8A3A', cheese: 'none', leaf: '#7FBF52' },
+      { name: 'Lasten ateria', patty: '#7A4A2A', cheese: '#F2B81C', leaf: 'none' }
+    ];
+    var meals = base.map(function (b, i) {
+      var p = seg.meals[i];
+      return { name: b.name, patty: b.patty, cheese: b.cheese, leaf: b.leaf, pct: p,
+        bar: 'height: 100%; border-radius: 999px; width: ' + Math.round(p / 40 * 100) + '%; background: ' + c };
+    });
+    var rows = seg.rows.map(function (r) {
+      var parts = r[0].split(' ');
+      return { name: r[0], initials: parts[0][0] + parts[1][0], id: r[1], tier: r[2], last: r[3], purchases: r[4], clv: r[5], churn: r[6],
+        bar: 'height: 100%; border-radius: 999px; width: ' + r[6] + '%; background: ' + (r[6] >= 50 ? '#D9481F' : '#2447D6') };
+    });
+    var weeks = [];
+    for (var w = 36; w <= 47; w++) weeks.push('vk ' + w);
+    var fmtN = function (x) { return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+    var segN = parseInt(seg.size.replace(/\s/g, ''), 10);
+    var ACTDEFS = function (laSz, laP) {
+      return {
+        context: 'Valittu segmentti: ' + seg.label + ' · ' + seg.size + ' asiakasta',
+        action: { title: 'Luo toimenpide: ' + seg.label, desc: 'Toimenpide kohdistuu koko segmenttiin ja päivittyy, kun asiakkaita tulee ja lähtee.',
+          rows: [['Kohde', seg.label + ' · ' + seg.size + ' asiakasta'], ['Toimenpide', seg.campaign], ['Kanavat', 'Sovelluksen push, sähköposti'], ['Ennuste', seg.expected.replace('Ennuste: ', '')]],
+          confirm: 'Luo toimenpide', doneText: 'Toimenpide luotu luonnoksena Kampanjat-näkymään.' },
+        audience: { title: 'Luo kohdeyleisö: ' + seg.label, desc: 'Segmentin asiakkaat siirretään mainoskanaviin hajautettuina (hash) tunnisteina.',
+          rows: [['Yleisö', seg.label + ' · ' + seg.size + ' asiakasta'], ['Tunnistettavissa', '≈ ' + fmtN(Math.round(segN * 0.92 / 10) * 10) + ' (92 %, sähköposti tai puhelin)'], ['Synkronointi', 'Meta, Google Ads, TikTok, Klaviyo'], ['Päivitys', 'Päivittäin klo 06.00']],
+          confirm: 'Luo kohdeyleisö', doneText: 'Kohdeyleisö luotu ja synkronointi aloitettu neljään kanavaan.' },
+        lookalike: { title: 'Luo look-alike-yleisö: ' + seg.label, desc: 'Mainoskanavat etsivät uusia ihmisiä, jotka muistuttavat tämän segmentin asiakkaita.',
+          rows: [['Lähdeyleisö', seg.label + ' · ' + seg.size + ' asiakasta'], ['Samankaltaisuus', laP + ' % · Suomi'], ['Arvioitu koko', laSz], ['Kanavat', 'Meta, Google Ads, TikTok']],
+          confirm: 'Luo look-alike-yleisö', doneText: 'Look-alike-yleisö (' + laP + ' %) luotu. Valmis kampanjakäyttöön noin 24 tunnissa.' }
+      };
+    };
+    var actKey = st.act || null;
+    var laPct = st.la || '1';
+    var laSize = { '1': '≈ 45 000 henkilöä', '3': '≈ 135 000 henkilöä', '5': '≈ 225 000 henkilöä' };
+    var DEFS = ACTDEFS(laSize[laPct], laPct);
+    var actBtns = [['action', 'Luo toimenpide'], ['audience', 'Luo kohdeyleisö'], ['lookalike', 'Luo look-alike-yleisö']].map(function (b) {
+      var on = b[0] === actKey;
+      return { label: b[1], on: on, isA: b[0] === 'action', isB: b[0] === 'audience', isC: b[0] === 'lookalike',
+        pick: function () { self.setState({ act: on ? null : b[0], done: false }); },
+        style: 'display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 15px; border: 2px solid #111218; ' + (on ? 'background: #111218; color: #FFFFFF' : 'background: #FFFFFF; color: #111218') };
+    });
+    var laOpts = ['1', '3', '5'].map(function (p) {
+      var on = p === laPct;
+      return { label: p + ' %', on: on, pick: function () { self.setState({ la: p, done: false }); },
+        style: 'min-height: 44px; min-width: 56px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-weight: 700; border: 2px solid ' + (on ? '#2447D6' : '#C9CCDA') + '; background: ' + (on ? '#E6EBFF' : '#FFFFFF') + '; color: ' + (on ? '#1D3FC4' : '#111218') };
+    });
+    var dd = actKey ? DEFS[actKey] : null;
+    var act = { open: !!dd, title: dd ? dd.title : '', desc: dd ? dd.desc : '',
+      rows: dd ? dd.rows.map(function (r) { return { k: r[0], v: r[1] }; }) : [],
+      isLa: actKey === 'lookalike', done: !!(dd && st.done), notDone: !!(dd && !st.done),
+      confirmLabel: dd ? dd.confirm : '', doneText: dd ? dd.doneText : '', context: DEFS.context,
+      confirm: function () { self.setState({ done: true }); },
+      close: function () { self.setState({ act: null, done: false }); } };
+    return {
+      actBtns: actBtns, laOpts: laOpts, act: act,
+      tabs: tabs, bars: bars, meals: meals, rows: rows, weeks: weeks,
+      seg: { label: seg.label, size: seg.size, desc: seg.desc, def: seg.def, campaign: seg.campaign, expected: seg.expected,
+        trend: seg.trendText, trendAria: 'Segmentin ' + seg.label + ' koko tuhansina, viikot 36–47: ' + seg.trend.join(', ').replace(/\./g, ','),
+        kpis: seg.kpis.map(function (k) { return { label: k[0], value: k[1] }; }),
+        chip: 'font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 2px solid ' + c + '; color: #111218' }
+    };
+  }
+}
+</script>
+<noscript>Tämä sivu tarvitsee JavaScriptin.</noscript>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avenyo – alkunäkymä</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2EE}
+a{color:#2447D6}a:hover{color:#1A33A0}
+button{font:inherit}
+</style>
+<script src="assets/runtime.js" defer></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<template id="dc-tpl">
+
+<div style="min-height: 100vh; background: #F4F2EE; color: #111218; font-family: Inter, system-ui, sans-serif; box-sizing: border-box">
+
+<header style="background: #111218; color: #FFFFFF">
+<div style="max-width: 1320px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
+<div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap">
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.12em">AVENYO</div>
+<div style="font-size: 13px; color: #B8BAC4">Asiakasdatan käyttöjärjestelmä</div>
+</div>
+<nav aria-label="Päävalikko" style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="#" aria-current="page" style="color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 14px; border-radius: 999px; background: #2A2C36">Yleiskuva</a>
+<a href="segmentit.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Asiakkaat</a>
+<a href="aikakone.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Aikakone</a>
+<a href="kohdeyleiso.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kohdeyleisöt</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kampanjat</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Tuotteet</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Raportit</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="font-size: 13px; color: #D6D7DD; border: 1px solid #3A3C47; border-radius: 999px; padding: 10px 14px">1.–30.11.2026</div>
+<button type="button" aria-label="Oma profiili" style="width: 44px; height: 44px; border-radius: 999px; border: 0; background: {{ accent }}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+</button>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1320px; margin: 0 auto; padding: 36px 32px 56px; display: flex; flex-direction: column; gap: 28px; box-sizing: border-box">
+
+<section aria-labelledby="valinta" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px">
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">YLEISKUVA · VIIMEISET 30 PÄIVÄÄ</div>
+<h1 style="margin: 6px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">{{ role.headline }}</h1>
+</div>
+<div id="valinta" style="font-size: 14px; color: #5B5D66">Valitse näkymä roolisi mukaan</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+<template data-sc="for" list="{{ roles }}" as="r" hint-placeholder-count="3">
+<button type="button" onClick="{{ r.pick }}" aria-pressed="{{ r.pressed }}" style="{{ r.btnStyle }}">
+<span style="{{ r.iconStyle }}">
+<template data-sc="if" value="{{ r.isCrm }}" hint-placeholder-val="{{ true }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14.5c2.6 0 4.5 1.6 4.5 4.5"></path></svg>
+</template>
+<template data-sc="if" value="{{ r.isMkt }}" hint-placeholder-val="{{ false }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 6a8.5 8.5 0 0 1 0 12"></path></svg>
+</template>
+<template data-sc="if" value="{{ r.isFin }}" hint-placeholder-val="{{ false }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+</template>
+</span>
+<span style="display: flex; flex-direction: column; gap: 2px; text-align: left">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">{{ r.title }}</span>
+<span style="font-size: 13px; color: #5B5D66">{{ r.desc }}</span>
+</span>
+</button>
+</template>
+</div>
+</section>
+
+<section aria-label="Tunnusluvut" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<template data-sc="for" list="{{ role.kpis }}" as="k" hint-placeholder-count="4">
+<div style="background: #FFFFFF; border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #E4E1DA">
+<div style="font-size: 14px; color: #5B5D66; font-weight: 500">{{ k.label }}</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1">{{ k.value }}</div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="{{ k.deltaStyle }}">{{ k.arrow }} {{ k.delta }}</span>
+<span style="font-size: 12px; color: #5B5D66">vs. edellinen jakso</span>
+</div>
+</div>
+</template>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border-radius: 16px; padding: 22px 24px; border: 1px solid #E4E1DA; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ role.chartTitle }}</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">{{ role.chartSub }}</div>
+</div>
+<div style="display: flex; gap: 16px; font-size: 13px; color: #3A3C47; flex-wrap: wrap">
+<span style="display: flex; align-items: center; gap: 6px"><span style="{{ legendNow }}"></span>Tämä vuosi</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 16px; height: 0; border-top: 2px dashed #8E919C"></span>Edellinen vuosi</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px">
+<div style="display: flex; flex-direction: column; justify-content: space-between; font-size: 12px; color: #5B5D66; padding: 10px 0 0; height: 200px; text-align: right; min-width: 40px">
+<span>{{ chart.yMax }}</span><span>{{ chart.yMid }}</span><span>{{ chart.yMin }}</span>
+</div>
+<div style="flex: 1; min-width: 0">
+<svg viewBox="0 0 600 210" preserveAspectRatio="none" role="img" aria-label="{{ chart.aria }}" style="width: 100%; height: 210px; display: block">
+<line x1="0" y1="20" x2="600" y2="20" stroke="#ECEAE4" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<line x1="0" y1="110" x2="600" y2="110" stroke="#ECEAE4" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<line x1="0" y1="200" x2="600" y2="200" stroke="#D9D6CE" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<path d="{{ chart.area }}" fill="{{ accent }}" fill-opacity="0.10"></path>
+<path d="{{ chart.prev }}" fill="none" stroke="#8E919C" stroke-width="2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"></path>
+<path d="{{ chart.line }}" fill="none" stroke="{{ accent }}" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+</svg>
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #5B5D66; margin-top: 8px">
+<template data-sc="for" list="{{ weeks }}" as="w" hint-placeholder-count="12"><span>{{ w }}</span></template>
+</div>
+</div>
+</div>
+</div>
+
+<div style="flex: 1 1 320px; min-width: 0; background: #FFFFFF; border-radius: 16px; padding: 22px 24px; border: 1px solid #E4E1DA; display: flex; flex-direction: column; gap: 18px">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ role.splitTitle }}</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">{{ role.splitSub }}</div>
+<template data-sc="if" value="{{ isCrm }}" hint-placeholder-val="{{ true }}">
+<a href="segmentit.html" style="display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: none">Avaa segmentit →</a>
+</template>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<template data-sc="for" list="{{ split }}" as="s" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 14px; gap: 8px">
+<span style="font-weight: 600">{{ s.label }}</span>
+<span style="color: #3A3C47">{{ s.value }} · {{ s.pct }} %</span>
+</div>
+<div style="height: 10px; border-radius: 999px; background: #F0EEE9; overflow: hidden">
+<div style="{{ s.barStyle }}"></div>
+</div>
+</div>
+</template>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="ateriat" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px">
+<h2 id="ateriat" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700">Ateriat</h2>
+<div style="font-size: 14px; color: #5B5D66">Mittari: <strong style="color: #111218">{{ role.mealMetric }}</strong></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px">
+<template data-sc="for" list="{{ meals }}" as="m" hint-placeholder-count="5">
+<div style="background: #FFFFFF; border-radius: 16px; padding: 18px 20px 20px; border: 1px solid #E4E1DA; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px">
+<div style="width: 80px; height: 64px; border-radius: 12px; background: #FBF4E8; display: flex; align-items: center; justify-content: center">
+<svg width="60" height="48" viewBox="0 0 72 56" aria-hidden="true">
+<path d="M8 24 C8 11 21 4 36 4 C51 4 64 11 64 24 Z" fill="#E6A03A"></path>
+<ellipse cx="26" cy="13" rx="2" ry="1.2" fill="#FFF1D2"></ellipse>
+<ellipse cx="38" cy="10" rx="2" ry="1.2" fill="#FFF1D2"></ellipse>
+<ellipse cx="47" cy="16" rx="2" ry="1.2" fill="#FFF1D2"></ellipse>
+<path d="M5 27 Q11 23 17 27 T29 27 T41 27 T53 27 T67 27 L67 30 L5 30 Z" fill="{{ m.leaf }}"></path>
+<path d="M8 30 H64 L57 36 L50 30 Z" fill="{{ m.cheese }}"></path>
+<rect x="7" y="31" width="58" height="9" rx="4.5" fill="{{ m.patty }}"></rect>
+<path d="M8 42 H64 V45 C64 49.5 60.5 52 56 52 H16 C11.5 52 8 49.5 8 45 Z" fill="#D2872B"></path>
+</svg>
+</div>
+<template data-sc="if" value="{{ m.hasTag }}" hint-placeholder-val="{{ false }}">
+<span style="{{ m.tagStyle }}">{{ m.tag }}</span>
+</template>
+</div>
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">{{ m.name }}</div>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 2px">Myyty {{ m.units }} kpl</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+<span style="font-size: 13px; color: #5B5D66">{{ role.mealShort }}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">{{ m.value }}</span>
+</div>
+<div style="height: 8px; border-radius: 999px; background: #F0EEE9; overflow: hidden">
+<div style="{{ m.barStyle }}"></div>
+</div>
+<div style="font-size: 12px; color: #5B5D66">{{ m.sub }}</div>
+</div>
+</div>
+</template>
+</div>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 999 1 560px; min-width: 0; background: #111218; color: #FFFFFF; border-radius: 16px; padding: 24px 26px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"></path></svg>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Suositellut toimenpiteet</h2>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<template data-sc="for" list="{{ actions }}" as="a" hint-placeholder-count="3">
+<li style="display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: #1D1F29; border-radius: 12px; padding: 14px 16px">
+<span style="display: flex; gap: 12px; align-items: flex-start; flex: 1 1 320px; min-width: 0">
+<span style="{{ a.numStyle }}">{{ a.n }}</span>
+<span style="font-size: 15px; line-height: 1.45; color: #ECEDF1">{{ a.text }}</span>
+</span>
+<a href="{{ a.href }}" style="color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; padding: 11px 16px; border-radius: 999px; border: 1px solid #4A4C58; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">{{ a.cta }}</a>
+</li>
+</template>
+</ol>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border-radius: 16px; padding: 24px 26px; border: 1px solid #E4E1DA; display: flex; flex-direction: column; gap: 12px; justify-content: space-between">
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">DATALÄHTEET</div>
+<ul style="margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<li style="display: flex; justify-content: space-between; gap: 8px"><span>Kassajärjestelmä</span><span style="color: #0F6E61; font-weight: 600">Synkronoitu 08:40</span></li>
+<li style="display: flex; justify-content: space-between; gap: 8px"><span>Kanta-asiakasohjelma</span><span style="color: #0F6E61; font-weight: 600">Synkronoitu 08:35</span></li>
+<li style="display: flex; justify-content: space-between; gap: 8px"><span>Markkinointiautomaatio</span><span style="color: #0F6E61; font-weight: 600">Synkronoitu 08:30</span></li>
+</ul>
+</div>
+<div style="font-size: 12px; color: #5B5D66; border-top: 1px solid #ECEAE4; padding-top: 12px">Demodata – luvut ovat esimerkkejä, eivät todellisia tuloksia.</div>
+</div>
+</section>
+
+</main>
+</div>
+</template>
+<script type="text/plain" id="dc-logic" data-props='{"startRole":{"editor":"enum","options":["crm","marketing","finance"],"default":"crm"},"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var key = st.role || this.props.startRole || 'crm';
+    var R = {
+      crm: {
+        title: 'CRM-asiantuntija', desc: 'Asiakkaat, segmentit, kanta-asiakkuus', accent: '#2447D6', tint: '#E8EDFF',
+        headline: 'Kanta-asiakkaat tekivät 38 % kaikista ostoista',
+        kpis: [
+          { label: 'Aktiiviset kanta-asiakkaat', value: '48 210', delta: '4,2 %', up: true, good: true },
+          { label: 'Uudelleenostoaste', value: '37 %', delta: '1,8 pp', up: true, good: true },
+          { label: 'Ostotiheys / asiakas', value: '2,4 / kk', delta: '0,2', up: true, good: true },
+          { label: 'Churn-riskissä', value: '6 120', delta: '310', up: true, good: false }
+        ],
+        chartTitle: 'Kanta-asiakasostot viikoittain', unit: 't. ostoa',
+        series: [24.1, 24.6, 24.3, 25.2, 25.8, 25.5, 26.4, 26.9, 26.6, 27.4, 28.2, 28.9],
+        prev: [22.0, 22.3, 22.1, 22.6, 22.9, 22.7, 23.2, 23.5, 23.4, 23.8, 24.2, 24.6],
+        min: 20, max: 30, fmt: function (v) { return String(v).replace('.', ',') + ' t.'; },
+        chartSub: 'Viikko 47: 28 900 ostoa · +17,5 % vs. edellinen vuosi',
+        splitTitle: 'Asiakassegmentit', splitSub: '48 210 aktiivista kanta-asiakasta',
+        split: [
+          { label: 'Uskolliset', value: '14 800', pct: 31 },
+          { label: 'Aktiiviset', value: '19 300', pct: 40 },
+          { label: 'Hiipuvat', value: '8 000', pct: 17 },
+          { label: 'Uudet', value: '6 110', pct: 12 }
+        ],
+        mealMetric: 'kanta-asiakkaiden osuus ostoista', mealShort: 'Kanta-asiakasosuus',
+        meals: [
+          { value: '41 %', bar: 41, sub: '15 100 kanta-asiakasostoa' },
+          { value: '46 %', bar: 46, sub: '11 920 kanta-asiakasostoa' },
+          { value: '33 %', bar: 33, sub: '6 510 kanta-asiakasostoa' },
+          { value: '52 %', bar: 52, sub: '5 450 kanta-asiakasostoa', tag: 'Uskollisin' },
+          { value: '28 %', bar: 28, sub: '2 300 kanta-asiakasostoa' }
+        ],
+        actions: [
+          { text: '6 120 asiakasta on churn-riskissä. Käynnistä win-back-kampanja Klassikko-tarjouksella.', cta: 'Avaa segmentti', href: 'segmentit.html' },
+          { text: 'Vege-aterialla on korkein kanta-asiakasosuus (52 %). Nosta se jäsenetujen kärkeen.', cta: 'Luo jäsenetu' },
+          { text: '2 300 asiakasta on yhden oston päässä Kulta-tasosta. Lähetä tasonnostomuistutus.', cta: 'Näytä asiakkaat' }
+        ]
+      },
+      marketing: {
+        title: 'Markkinointipäällikkö', desc: 'Kampanjat, kanavat, konversiot', accent: '#D9481F', tint: '#FDECE5',
+        headline: 'Kampanjat toivat 182 400 € myyntiä',
+        kpis: [
+          { label: 'Kampanjamyynti', value: '182 400 €', delta: '12,4 %', up: true, good: true },
+          { label: 'ROAS', value: '4,1×', delta: '0,3', up: true, good: true },
+          { label: 'Sähköpostin avausprosentti', value: '42 %', delta: '2 pp', up: true, good: true },
+          { label: 'Sovelluskonversio', value: '3,8 %', delta: '0,2 pp', up: false, good: false }
+        ],
+        chartTitle: 'Kampanjamyynti viikoittain', unit: 'k€',
+        series: [36, 39, 34, 41, 43, 40, 44, 46, 42, 45, 47, 48],
+        prev: [31, 33, 30, 35, 36, 34, 37, 38, 36, 38, 40, 41],
+        min: 25, max: 50, fmt: function (v) { return v + ' k€'; },
+        chartSub: 'Viikko 47: 48 000 € · +17,1 % vs. edellinen vuosi',
+        splitTitle: 'Myynti kanavittain', splitSub: 'Kampanjoihin kohdistettu myynti, 30 pv',
+        split: [
+          { label: 'Sovellus', value: '78 400 €', pct: 43 },
+          { label: 'Sähköposti', value: '47 400 €', pct: 26 },
+          { label: 'Some', value: '34 700 €', pct: 19 },
+          { label: 'Push-viestit', value: '21 900 €', pct: 12 }
+        ],
+        mealMetric: 'kampanjan kautta ostetut ateriat', mealShort: 'Kampanjaostot',
+        meals: [
+          { value: '4 900', bar: 100, sub: '13 % aterian myynnistä' },
+          { value: '4 100', bar: 84, sub: '16 % aterian myynnistä', tag: 'Kampanjan kärki' },
+          { value: '3 200', bar: 65, sub: '16 % aterian myynnistä' },
+          { value: '1 700', bar: 35, sub: '16 % aterian myynnistä' },
+          { value: '800', bar: 16, sub: '10 % aterian myynnistä' }
+        ],
+        actions: [
+          { text: 'Push-viestien ROAS on 5,8×. Siirrä osa some-budjetista push-kampanjoihin.', cta: 'Muokkaa budjettia' },
+          { text: 'Tupla juusto -kampanja tuotti 4 100 ostoa. Jatka kampanjaa viikolle 49.', cta: 'Jatka kampanjaa' },
+          { text: 'Sovelluskonversio laski 0,2 pp. Testaa uusi kassanäkymä A/B-testillä.', cta: 'Luo testi' }
+        ]
+      },
+      finance: {
+        title: 'Taloushallinto', desc: 'Liikevaihto, kate, kustannukset', accent: '#0F7B6C', tint: '#E2F3F0',
+        headline: 'Liikevaihto 1,26 M€ – kasvua 6,8 %',
+        kpis: [
+          { label: 'Liikevaihto', value: '1,26 M€', delta: '6,8 %', up: true, good: true },
+          { label: 'Keskiostos', value: '12,40 €', delta: '0,35 €', up: true, good: true },
+          { label: 'Bruttokate', value: '64 %', delta: '0,9 pp', up: true, good: true },
+          { label: 'Alennusten osuus', value: '7,9 %', delta: '1,1 pp', up: true, good: false }
+        ],
+        chartTitle: 'Liikevaihto viikoittain', unit: 'k€',
+        series: [270, 276, 272, 283, 290, 286, 297, 301, 305, 312, 318, 325],
+        prev: [252, 256, 254, 260, 263, 261, 267, 271, 274, 279, 283, 288],
+        min: 240, max: 340, fmt: function (v) { return v + ' k€'; },
+        chartSub: 'Viikko 47: 325 000 € · +12,8 % vs. edellinen vuosi',
+        splitTitle: 'Kustannusrakenne', splitSub: 'Osuus liikevaihdosta, 30 pv',
+        split: [
+          { label: 'Raaka-aineet', value: '453 600 €', pct: 36 },
+          { label: 'Henkilöstö', value: '365 400 €', pct: 29 },
+          { label: 'Tilat', value: '138 600 €', pct: 11 },
+          { label: 'Markkinointi', value: '75 600 €', pct: 6 }
+        ],
+        mealMetric: 'kate euroina per ateria', mealShort: 'Kate / ateria',
+        meals: [
+          { value: '7,90 €', bar: 87, sub: 'Kate yhteensä 291 000 €' },
+          { value: '9,10 €', bar: 100, sub: 'Kate yhteensä 235 900 €', tag: 'Paras kate' },
+          { value: '7,40 €', bar: 81, sub: 'Kate yhteensä 146 100 €' },
+          { value: '7,60 €', bar: 84, sub: 'Kate yhteensä 79 600 €' },
+          { value: '4,90 €', bar: 54, sub: 'Kate yhteensä 40 300 €' }
+        ],
+        actions: [
+          { text: 'Alennusten osuus nousi 7,9 %:iin. Tarkista kampanjoiden marginaalit ennen joulukuuta.', cta: 'Avaa raportti' },
+          { text: 'Tupla juusto -aterialla on paras kate, 9,10 € per ateria.', cta: 'Näytä erittely' },
+          { text: 'Lasten aterian kate on matalin, 4,90 €. Arvioi hinnoittelu tai annoskoko.', cta: 'Hinnoittelumalli' }
+        ]
+      }
+    };
+    var role = R[key];
+    var accent = role.accent;
+    var baseMeals = [
+      { name: 'Klassikko-ateria', units: '36 840', patty: '#7A4A2A', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Tupla juusto', units: '25 920', patty: '#6A3D22', cheese: '#F2B81C', leaf: '#5E9E3E' },
+      { name: 'Crispy kana', units: '19 740', patty: '#D9A23F', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Vege-ateria', units: '10 480', patty: '#4F8A3A', cheese: 'none', leaf: '#7FBF52' },
+      { name: 'Lasten ateria', units: '8 220', patty: '#7A4A2A', cheese: '#F2B81C', leaf: 'none' }
+    ];
+    var meals = baseMeals.map(function (b, i) {
+      var m = role.meals[i];
+      return {
+        name: b.name, units: b.units, patty: b.patty, cheese: b.cheese, leaf: b.leaf,
+        value: m.value, sub: m.sub, tag: m.tag || '', hasTag: !!m.tag,
+        tagStyle: 'font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: ' + role.tint + '; color: #111218',
+        barStyle: 'height: 100%; border-radius: 999px; width: ' + m.bar + '%; background: ' + accent
+      };
+    });
+    var roles = ['crm', 'marketing', 'finance'].map(function (k) {
+      var r = R[k];
+      var on = k === key;
+      return {
+        title: r.title, desc: r.desc, pressed: on,
+        isCrm: k === 'crm', isMkt: k === 'marketing', isFin: k === 'finance',
+        pick: function () { self.setState({ role: k }); },
+        btnStyle: 'display: flex; align-items: center; gap: 14px; padding: 16px 18px; min-height: 76px; border-radius: 16px; cursor: pointer; color: #111218; text-align: left; ' +
+          (on ? 'background: #FFFFFF; border: 2px solid ' + r.accent + '; box-shadow: 0 6px 20px rgba(17,18,24,0.08)' : 'background: #FBFAF7; border: 2px solid #E4E1DA'),
+        iconStyle: 'width: 44px; height: 44px; flex: none; border-radius: 12px; display: flex; align-items: center; justify-content: center; ' +
+          (on ? 'background: ' + r.accent + '; color: #FFFFFF' : 'background: #EDEBE5; color: #3A3C47')
+      };
+    });
+    var kpis = role.kpis.map(function (k) {
+      return {
+        label: k.label, value: k.value, delta: k.delta, arrow: k.up ? '↑' : '↓',
+        deltaStyle: 'font-size: 13px; font-weight: 600; padding: 4px 9px; border-radius: 999px; ' +
+          (k.good ? 'background: #E6EBFF; color: #1D3FC4' : 'background: #FDE9E1; color: #A3360F')
+      };
+    });
+    var toPath = function (vals) {
+      return vals.map(function (v, i) {
+        var x = (i / (vals.length - 1)) * 600;
+        var y = 200 - ((v - role.min) / (role.max - role.min)) * 180;
+        return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+      }).join(' ');
+    };
+    var line = toPath(role.series);
+    var chart = {
+      line: line,
+      area: line + ' L600 200 L0 200 Z',
+      prev: toPath(role.prev),
+      yMax: role.fmt(role.max), yMid: role.fmt((role.max + role.min) / 2), yMin: role.fmt(role.min),
+      aria: role.chartTitle + ', viikot 36–47. ' + role.chartSub
+    };
+    var split = role.split.map(function (s) {
+      return { label: s.label, value: s.value, pct: s.pct,
+        barStyle: 'height: 100%; border-radius: 999px; width: ' + Math.round(s.pct / 45 * 100) + '%; background: ' + accent };
+    });
+    var actions = role.actions.map(function (a, i) {
+      return { n: i + 1, text: a.text, cta: a.cta, href: a.href || '#',
+        numStyle: 'flex: none; width: 28px; height: 28px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #FFFFFF; background: ' + accent };
+    });
+    var weeks = [];
+    for (var w = 36; w <= 47; w++) weeks.push('vk ' + w);
+    return {
+      role: { headline: role.headline, kpis: kpis, chartTitle: role.chartTitle, chartSub: role.chartSub,
+        splitTitle: role.splitTitle, splitSub: role.splitSub, mealMetric: role.mealMetric, mealShort: role.mealShort },
+      roles: roles, accent: accent, isCrm: key === 'crm', chart: chart, split: split, meals: meals, actions: actions, weeks: weeks,
+      legendNow: 'width: 16px; height: 3px; border-radius: 2px; background: ' + accent
+    };
+  }
+}
+</script>
+<noscript>Tämä sivu tarvitsee JavaScriptin.</noscript>
+</body>
+</html>

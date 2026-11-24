@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<title>Avenyo – aikakone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2EE}
+a{color:#2447D6}a:hover{color:#1A33A0}
+button{font:inherit}
+input[type=range]{accent-color:#111218}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F4F2EE; color: #111218; font-family: Inter, system-ui, sans-serif; box-sizing: border-box">
+
+<header style="background: #111218; color: #FFFFFF">
+<div style="max-width: 1320px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
+<div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap">
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.12em">AVENYO</div>
+<div style="font-size: 13px; color: #B8BAC4">Asiakasdatan käyttöjärjestelmä</div>
+</div>
+<nav aria-label="Päävalikko" style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Yleiskuva</a>
+<a href="Segmentti.dc.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Asiakkaat</a>
+<a href="Aikakone.dc.html" aria-current="page" style="color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 14px; border-radius: 999px; background: #2A2C36">Aikakone</a>
+<a href="Kohdeyleiso.dc.html" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kohdeyleisöt</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kampanjat</a>
+<a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Raportit</a>
+</nav>
+<div style="font-size: 13px; color: #D6D7DD; border: 1px solid #3A3C47; border-radius: 999px; padding: 10px 14px">Tänään 24.11.2026</div>
+</div>
+</header>
+
+<main style="max-width: 1320px; margin: 0 auto; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 24px; box-sizing: border-box">
+
+<nav aria-label="Murupolku" style="font-size: 14px; color: #5B5D66; display: flex; gap: 8px; flex-wrap: wrap">
+<a href="Main.dc.html" style="text-decoration: none">Yleiskuva</a><span aria-hidden="true">/</span><a href="Segmentti.dc.html" style="text-decoration: none">Hiipuvat</a><span aria-hidden="true">/</span><span style="color: #111218; font-weight: 600">Laura K.</span>
+</nav>
+
+<section style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: flex-end">
+<div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap">
+<div style="width: 72px; height: 72px; border-radius: 999px; background: #111218; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700">LK</div>
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">AIKAKONE</div>
+<h1 style="margin: 4px 0 6px; font-family: 'Space Grotesk', sans-serif; font-size: 40px; line-height: 1.05; font-weight: 700">Laura K.</h1>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px">
+<span style="padding: 5px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E4E1DA">A-48213</span>
+<span style="padding: 5px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E4E1DA">Jäsen 3/2024 alkaen</span>
+<span style="padding: 5px 10px; border-radius: 999px; background: #EDEDF0; border: 1px solid #C9CCDA">Hopea-taso</span>
+<span style="padding: 5px 10px; border-radius: 999px; background: #FDE9E1; color: #A3360F; font-weight: 600">Hiipuva</span>
+<span style="padding: 5px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E4E1DA">Suosikkiravintola: Espoo, Leppävaara</span>
+</div>
+</div>
+</div>
+<div role="group" aria-label="Ennusteen skenaario" style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="2">
+<button type="button" onClick="{{ s.pick }}" aria-pressed="{{ s.on }}" style="{{ s.style }}">
+<span style="font-weight: 700; font-size: 15px">{{ s.label }}</span>
+<span style="font-size: 12px; color: #5B5D66">{{ s.desc }}</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section aria-label="Toiminnot" style="background: #FFFFFF; border: 2px solid #111218; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #5B5D66">TOIMINNOT</div>
+<div style="font-size: 15px; font-weight: 600; margin-top: 2px">{{ act.context }}</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<sc-for list="{{ actBtns }}" as="b" hint-placeholder-count="3">
+<button type="button" onClick="{{ b.pick }}" aria-pressed="{{ b.on }}" aria-expanded="{{ b.on }}" style="{{ b.style }}">
+<sc-if value="{{ b.isA }}" hint-placeholder-val="{{ true }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>
+</sc-if>
+<sc-if value="{{ b.isB }}" hint-placeholder-val="{{ false }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5"></circle></svg>
+</sc-if>
+<sc-if value="{{ b.isC }}" hint-placeholder-val="{{ false }}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3.5"></circle><path d="M2 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"></path><circle cx="16.5" cy="8" r="3" stroke-dasharray="2 2"></circle><path d="M16 14.6c3.2 0 6 2 6 5.4" stroke-dasharray="2 2"></path></svg>
+</sc-if>
+<span>{{ b.label }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ act.open }}" hint-placeholder-val="{{ false }}">
+<div style="border-top: 1px solid #ECEAE4; padding-top: 14px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: flex-start">
+<div style="flex: 1 1 360px; min-width: 0">
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ act.title }}</h3>
+<p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #3A3C47">{{ act.desc }}</p>
+</div>
+<button type="button" aria-label="Sulje" onClick="{{ act.close }}" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; color: #111218; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+</button>
+</div>
+<sc-if value="{{ act.isLa }}" hint-placeholder-val="{{ false }}">
+<div role="group" aria-label="Samankaltaisuus" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap">
+<span style="font-size: 14px; font-weight: 600; margin-right: 4px">Samankaltaisuus</span>
+<sc-for list="{{ laOpts }}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{ o.pick }}" aria-pressed="{{ o.on }}" style="{{ o.style }}">{{ o.label }}</button>
+</sc-for>
+<span style="font-size: 13px; color: #5B5D66">1 % = lähimmät, 5 % = laajin tavoittavuus</span>
+</div>
+</sc-if>
+<dl style="margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px">
+<sc-for list="{{ act.rows }}" as="r" hint-placeholder-count="4">
+<div style="background: #F8F7F3; border-radius: 10px; padding: 10px 12px">
+<dt style="font-size: 12px; color: #5B5D66">{{ r.k }}</dt>
+<dd style="margin: 2px 0 0; font-weight: 600; font-size: 15px; line-height: 1.4">{{ r.v }}</dd>
+</div>
+</sc-for>
+</dl>
+<sc-if value="{{ act.done }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; gap: 10px; align-items: center; background: #E6EBFF; color: #1D3FC4; border-radius: 12px; padding: 12px 14px; font-weight: 600; font-size: 14px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17 19 7"></path></svg>
+<span>{{ act.doneText }}</span>
+</div>
+</sc-if>
+<sc-if value="{{ act.notDone }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{ act.confirm }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 0; background: #2447D6; color: #FFFFFF; cursor: pointer; font-weight: 700; font-size: 15px">{{ act.confirmLabel }}</button>
+<button type="button" onClick="{{ act.close }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; color: #111218; cursor: pointer; font-weight: 600; font-size: 15px">Peruuta</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</section>
+
+<section aria-label="Yhteenveto" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px; color: #5B5D66">Elinkaariarvo tähän asti</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700">876 €</span>
+<span style="font-size: 12px; color: #5B5D66">72 käyntiä · 11 neljännestä</span>
+</div>
+<div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px; color: #5B5D66">CLV-ennuste, seuraavat 12 kk</span>
+<span style="{{ clvStyle }}">{{ sc.clv }}</span>
+<span style="font-size: 12px; color: #5B5D66">{{ sc.clvNote }}</span>
+</div>
+<div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px; color: #5B5D66">Churn-riski nyt → 12 kk</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700">58 % → {{ sc.churnEnd }}</span>
+<span style="font-size: 12px; color: #5B5D66">Viimeisin osto 21.10.2026 (34 pv sitten)</span>
+</div>
+<div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px; color: #5B5D66">Seuraava todennäköinen osto</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.2">{{ sc.next }}</span>
+<span style="font-size: 12px; color: #5B5D66">{{ sc.nextNote }}</span>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">Kulutus neljänneksittäin</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">Liu’uta aikajanaa: menneisyys on toteutunutta dataa, tulevaisuus mallin ennuste.</div>
+</div>
+<div style="display: flex; gap: 16px; font-size: 13px; color: #3A3C47; flex-wrap: wrap">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 16px; height: 3px; border-radius: 2px; background: #111218"></span>Toteutunut</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="{{ legendF }}"></span>Ennuste</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="{{ legendB }}"></span>Vaihteluväli</span>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; gap: 10px">
+<div style="display: flex; flex-direction: column; justify-content: space-between; font-size: 12px; color: #5B5D66; height: 248px; padding-top: 18px; text-align: right; min-width: 40px">
+<span>120 €</span><span>60 €</span><span>0 €</span>
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="position: relative; height: 260px">
+<svg viewBox="0 0 600 210" preserveAspectRatio="none" role="img" aria-label="{{ chart.aria }}" style="width: 100%; height: 260px; display: block">
+<rect x="{{ chart.nowX }}" y="0" width="{{ chart.futureW }}" height="200" fill="#F6F4EF"></rect>
+<line x1="0" y1="20" x2="600" y2="20" stroke="#ECEAE4" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<line x1="0" y1="110" x2="600" y2="110" stroke="#ECEAE4" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<line x1="0" y1="200" x2="600" y2="200" stroke="#D9D6CE" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+<path d="{{ chart.band }}" fill="{{ color }}" fill-opacity="0.14"></path>
+<path d="{{ chart.pastArea }}" fill="#111218" fill-opacity="0.05"></path>
+<path d="{{ chart.past }}" fill="none" stroke="#111218" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+<path d="{{ chart.future }}" fill="none" stroke="{{ color }}" stroke-width="3" stroke-dasharray="7 6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+<line x1="{{ chart.nowX }}" y1="0" x2="{{ chart.nowX }}" y2="200" stroke="#111218" stroke-width="1.5" vector-effect="non-scaling-stroke"></line>
+<line x1="{{ chart.selX }}" y1="0" x2="{{ chart.selX }}" y2="200" stroke="{{ chart.selColor }}" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"></line>
+</svg>
+<span style="{{ chart.nowLabel }}">NYT</span>
+<span style="position: absolute; right: 8px; top: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: #5B5D66">ENNUSTE</span>
+<span style="{{ chart.dot }}" aria-hidden="true"></span>
+<span style="{{ chart.bubble }}">{{ sel.spend }}</span>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; color: #5B5D66; margin-top: 6px">
+<sc-for list="{{ qLabels }}" as="q" hint-placeholder-count="16"><span style="{{ q.style }}">{{ q.text }}</span></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #3A3C47; margin-top: 2px">
+<span>2024</span><span>2025</span><span>2026</span><span>2027</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px">
+<label for="aikajana" style="font-size: 13px; font-weight: 600">Aikajana: {{ sel.quarter }}</label>
+<input id="aikajana" type="range" min="0" max="15" step="1" value="{{ idx }}" onChange="{{ onScrub }}" style="width: 100%; height: 28px; margin: 0; cursor: pointer">
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{ prev }}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; cursor: pointer; font-weight: 600; color: #111218">← Edellinen</button>
+<button type="button" onClick="{{ goNow }}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: #111218; color: #FFFFFF; cursor: pointer; font-weight: 600">Nyt</button>
+<button type="button" onClick="{{ next }}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #C9CCDA; background: #FFFFFF; cursor: pointer; font-weight: 600; color: #111218">Seuraava →</button>
+</div>
+</div>
+</div>
+</div>
+
+<aside aria-label="Valittu ajankohta" style="flex: 1 1 300px; min-width: 0; background: #F8F7F3; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700">{{ sel.quarter }}</span>
+<span style="{{ sel.statusStyle }}">{{ sel.status }}</span>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3A3C47">{{ sel.story }}</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Kulutus</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.spend }}</div></div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Käynnit</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.visits }}</div></div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Keskiostos</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.avg }}</div></div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Taso</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.tier }}</div></div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Kertynyt arvo</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.cum }}</div></div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #5B5D66">Churn-riski</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">{{ sel.churn }}</div></div>
+</div>
+<div style="background: #FFFFFF; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 12px">
+<div style="width: 56px; height: 44px; flex: none; border-radius: 10px; background: #FBF4E8; display: flex; align-items: center; justify-content: center">
+<svg width="42" height="33" viewBox="0 0 72 56" aria-hidden="true">
+<path d="M8 24 C8 11 21 4 36 4 C51 4 64 11 64 24 Z" fill="#E6A03A"></path>
+<path d="M5 27 Q11 23 17 27 T29 27 T41 27 T53 27 T67 27 L67 30 L5 30 Z" fill="{{ sel.meal.leaf }}"></path>
+<path d="M8 30 H64 L57 36 L50 30 Z" fill="{{ sel.meal.cheese }}"></path>
+<rect x="7" y="31" width="58" height="9" rx="4.5" fill="{{ sel.meal.patty }}"></rect>
+<path d="M8 42 H64 V45 C64 49.5 60.5 52 56 52 H16 C11.5 52 8 49.5 8 45 Z" fill="#D2872B"></path>
+</svg>
+</div>
+<div><div style="font-size: 12px; color: #5B5D66">Lempiateria</div><div style="font-weight: 700; font-size: 16px">{{ sel.meal.name }}</div></div>
+</div>
+</aside>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700">Asiakkuuden käännekohdat</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px">
+<sc-for list="{{ events }}" as="e" hint-placeholder-count="9">
+<li style="display: flex">
+<button type="button" onClick="{{ e.pick }}" aria-pressed="{{ e.on }}" style="{{ e.style }}">
+<span style="{{ e.dateStyle }}">{{ e.date }}</span>
+<span style="font-size: 14px; line-height: 1.4; font-weight: 500">{{ e.text }}</span>
+</button>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<section style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border-radius: 16px; border: 1px solid #E4E1DA; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+<div>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">Ennusteen ajurit</h2>
+<div style="font-size: 13px; color: #5B5D66; margin-top: 4px">Mitkä tekijät vaikuttavat churn-riskiin eniten</div>
+</div>
+<sc-for list="{{ drivers }}" as="d" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; gap: 10px; font-size: 14px"><span style="font-weight: 600">{{ d.label }}</span><span style="{{ d.tagStyle }}">{{ d.tag }}</span></div>
+<div style="height: 8px; border-radius: 999px; background: #F0EEE9; overflow: hidden"><div style="{{ d.bar }}"></div></div>
+<div style="font-size: 12px; color: #5B5D66">{{ d.note }}</div>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; background: #111218; color: #FFFFFF; border-radius: 16px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: #B8BAC4">SEURAAVA PARAS TOIMENPIDE</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.25">Win-back-tarjous: Klassikko-ateria 6,90 € sovelluksessa, voimassa 7 päivää</div>
+<div style="font-size: 14px; color: #D6D7DD; line-height: 1.5">Laura on reagoinut hintatarjouksiin 4 kertaa viidestä. Paras lähetysaika on pe klo 10.30, juuri ennen lounasta.</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="background: #1D1F29; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #B8BAC4">Paluu</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">64 %</div></div>
+<div style="background: #1D1F29; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #B8BAC4">CLV-lisä</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">+197 €</div></div>
+<div style="background: #1D1F29; border-radius: 10px; padding: 10px 12px"><div style="font-size: 12px; color: #B8BAC4">Tarjouksen hinta</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700">3,20 €</div></div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a href="#" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #FFFFFF; color: #111218; text-decoration: none; font-weight: 600">Käynnistä tarjous</a>
+<button type="button" onClick="{{ showWb }}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #4A4C58; background: transparent; color: #FFFFFF; cursor: pointer; font-weight: 600">Näytä vaikutus ennusteessa</button>
+</div>
+</div>
+</section>
+
+<div style="font-size: 12px; color: #5B5D66">Demodata – asiakas, luvut ja ennusteet ovat keksittyjä esimerkkejä. Ennuste perustuu asiakkaan ostohistoriaan ja vastaavien asiakkaiden käytökseen.</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startScenario":{"editor":"enum","options":["base","winback"],"default":"base"},"$preview":{"width":1440,"height":1780}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var NOW = 11;
+    var idx = (typeof st.idx === 'number') ? st.idx : NOW;
+    var scen = st.scen || this.props.startScenario || 'base';
+    var wb = scen === 'winback';
+    var color = wb ? '#2447D6' : '#D9481F';
+    var Q = [];
+    for (var y = 24; y <= 27; y++) for (var q = 1; q <= 4; q++) Q.push({ short: 'Q' + q, full: 'Q' + q + '/20' + y });
+    var past = [38, 52, 61, 74, 80, 86, 92, 104, 98, 88, 62, 41];
+    var fut = wb ? [58, 72, 80, 86] : [33, 26, 22, 18];
+    var band = wb ? [10, 13, 15, 17] : [8, 10, 12, 14];
+    var spend = past.concat(fut);
+    var visits = [3, 4, 5, 6, 7, 7, 8, 9, 8, 7, 5, 3].concat(wb ? [5, 6, 7, 7] : [3, 2, 2, 2]);
+    var tiers = ['Pronssi', 'Pronssi', 'Hopea', 'Hopea', 'Hopea', 'Kulta', 'Kulta', 'Kulta', 'Kulta', 'Kulta', 'Kulta', 'Hopea'].concat(wb ? ['Hopea', 'Hopea', 'Kulta', 'Kulta'] : ['Hopea', 'Pronssi', 'Pronssi', 'Pronssi']);
+    var churn = [8, 6, 5, 4, 4, 3, 3, 2, 4, 9, 31, 58].concat(wb ? [41, 28, 19, 14] : [72, 81, 86, 90]);
+    var fav = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2].concat(wb ? [2, 3, 3, 3] : [2, 2, 2, 2]);
+    var conf = [82, 74, 66, 58];
+    var MEALS = [
+      { name: 'Klassikko-ateria', patty: '#7A4A2A', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Tupla juusto', patty: '#6A3D22', cheese: '#F2B81C', leaf: '#5E9E3E' },
+      { name: 'Crispy kana', patty: '#D9A23F', cheese: 'none', leaf: '#5E9E3E' },
+      { name: 'Vege-ateria', patty: '#4F8A3A', cheese: 'none', leaf: '#7FBF52' }
+    ];
+    var X = function (i) { return i / 15 * 600; };
+    var Y = function (v) { return 200 - v / 120 * 180; };
+    var pt = function (i, v) { return X(i).toFixed(1) + ' ' + Y(v).toFixed(1); };
+    var pastPath = past.map(function (v, i) { return (i ? 'L' : 'M') + pt(i, v); }).join(' ');
+    var futPath = 'M' + pt(NOW, past[NOW]) + ' ' + fut.map(function (v, j) { return 'L' + pt(NOW + 1 + j, v); }).join(' ');
+    var up = fut.map(function (v, j) { return 'L' + pt(NOW + 1 + j, v + band[j]); }).join(' ');
+    var lo = fut.map(function (v, j) { return pt(NOW + 1 + j, Math.max(0, v - band[j])); }).reverse().map(function (s) { return 'L' + s; }).join(' ');
+    var bandPath = 'M' + pt(NOW, past[NOW]) + ' ' + up + ' ' + lo + ' Z';
+    var eur = function (v) { return v + ' €'; };
+    var fmt2 = function (v) { return v.toFixed(2).replace('.', ',') + ' €'; };
+    var isFuture = idx > NOW;
+    var selColor = isFuture ? color : '#111218';
+    var leftPct = (idx / 15 * 100).toFixed(2);
+    var topPx = (Y(spend[idx]) * 260 / 210).toFixed(1);
+    var cum = 0; for (var k = 0; k <= idx; k++) cum += spend[k];
+
+    var pastEvents = [
+      { i: 0, date: '3/2024', text: 'Liittyi jäsenohjelmaan – ensimmäinen osto Klassikko-ateria' },
+      { i: 2, date: '8/2024', text: 'Nousi Hopea-tasolle' },
+      { i: 5, date: '4/2025', text: 'Nousi Kulta-tasolle, suosikiksi Tupla juusto' },
+      { i: 7, date: '12/2025', text: 'Ennätysneljännes: 104 € ja 9 käyntiä' },
+      { i: 10, date: '7/2026', text: 'Ostotiheys alkoi laskea, sovelluskäyttö loppui' },
+      { i: 11, date: '10/2026', text: 'Putosi Hopea-tasolle · viimeisin osto 21.10.' }
+    ];
+    var futEvents = wb ? [
+      { i: 12, date: '12/2026', text: 'Ennuste: palaa tarjouksen myötä (64 %)' },
+      { i: 13, date: '3/2027', text: 'Ennuste: kokeilee ja vaihtaa Vege-ateriaan' },
+      { i: 14, date: '7/2027', text: 'Ennuste: takaisin Kulta-tasolle' }
+    ] : [
+      { i: 12, date: '1/2027', text: 'Ennuste: ostot harvenevat 2–3 käyntiin / neljännes' },
+      { i: 13, date: '4/2027', text: 'Ennuste: putoaa Pronssi-tasolle' },
+      { i: 15, date: '10/2027', text: 'Ennuste: poistuu aktiivisista asiakkaista (90 %)' }
+    ];
+    var allEvents = pastEvents.concat(futEvents);
+    var hit = null; allEvents.forEach(function (e) { if (e.i === idx) hit = e; });
+    var story = hit ? hit.text + '.' : (isFuture ? 'Ennuste perustuu Lauran ostohistoriaan ja 8 000 samankaltaisen asiakkaan käytökseen.' : 'Tavallinen neljännes: ' + visits[idx] + ' käyntiä, suosikkina ' + MEALS[fav[idx]].name + '.');
+
+    var events = allEvents.map(function (e) {
+      var f = e.i > NOW; var on = e.i === idx;
+      return { date: e.date, text: e.text, on: on,
+        pick: function () { self.setState({ idx: e.i }); },
+        dateStyle: 'font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: ' + (f ? (wb ? '#1D3FC4' : '#A3360F') : '#5B5D66'),
+        style: 'flex: 1; display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 14px 16px; border-radius: 14px; cursor: pointer; color: #111218; min-height: 96px; ' +
+          'background: ' + (on ? '#FFFFFF' : (f ? 'transparent' : '#FBFAF7')) + '; ' +
+          'border: 2px ' + (f ? 'dashed ' : 'solid ') + (on ? (f ? color : '#111218') : (f ? '#C9C6BE' : '#E4E1DA')) };
+    });
+
+    var scenarios = [
+      { key: 'base', label: 'Ei toimenpiteitä', desc: 'Nykyinen kehitys jatkuu', c: '#D9481F' },
+      { key: 'winback', label: 'Win-back-tarjous', desc: 'Klassikko 6,90 € / 7 pv', c: '#2447D6' }
+    ].map(function (s) {
+      var on = s.key === scen;
+      return { label: s.label, desc: s.desc, on: on,
+        pick: function () { self.setState({ scen: s.key }); },
+        style: 'display: flex; flex-direction: column; gap: 2px; text-align: left; padding: 12px 16px; min-height: 60px; border-radius: 14px; cursor: pointer; color: #111218; ' +
+          (on ? 'background: #FFFFFF; border: 2px solid ' + s.c + '; box-shadow: 0 6px 20px rgba(17,18,24,0.08)' : 'background: #FBFAF7; border: 2px solid #E4E1DA') };
+    });
+
+    var drivers = [
+      { label: 'Ostoväli pidentynyt 9 → 34 päivään', tag: 'Nostaa riskiä', risk: true, w: 92, note: 'Vahvin yksittäinen signaali' },
+      { label: 'Sovelluksen käyttö loppunut 7/2026', tag: 'Nostaa riskiä', risk: true, w: 70, note: 'Ostot vain kassalla, ei pisteiden keruuta' },
+      { label: 'Lounasajan ostot −80 %', tag: 'Nostaa riskiä', risk: true, w: 55, note: 'Arkilounaat Leppävaarassa harvenneet' },
+      { label: 'Reagoinut hintatarjouksiin 4/5 kertaa', tag: 'Laskee riskiä', risk: false, w: 64, note: 'Hyvä vipu win-back-kampanjalle' }
+    ].map(function (d) {
+      return { label: d.label, tag: d.tag, note: d.note,
+        tagStyle: 'font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; ' + (d.risk ? 'background: #FDE9E1; color: #A3360F' : 'background: #E6EBFF; color: #1D3FC4'),
+        bar: 'height: 100%; border-radius: 999px; width: ' + d.w + '%; background: ' + (d.risk ? '#D9481F' : '#2447D6') };
+    });
+
+    var qLabels = Q.map(function (q, i) {
+      return { text: q.short, style: 'flex: 1; text-align: center; ' + (i === idx ? 'color: #111218; font-weight: 700' : '') };
+    });
+
+    var clamp = function (v) { return Math.max(0, Math.min(15, v)); };
+    var ACTDEFS = function (laSz, laP) {
+      return {
+        context: 'Valittu asiakas: Laura K. · Hiipuva · churn-riski 58 %',
+        action: { title: 'Luo toimenpide Lauralle', desc: 'Henkilökohtainen win-back-tarjous, joka perustuu Lauran ostohistoriaan ja ennusteeseen.',
+          rows: [['Toimenpide', 'Klassikko-ateria 6,90 € sovelluksessa, voimassa 7 pv'], ['Lähetys', 'Pe 27.11. klo 10.30 · push + sähköposti'], ['Ennuste', 'Paluu 64 % · CLV +197 €'], ['Kustannus', '3,20 € / lunastus']],
+          confirm: 'Luo toimenpide', doneText: 'Toimenpide ajastettu pe 27.11. klo 10.30.' },
+        audience: { title: 'Luo kohdeyleisö Lauran profiilista', desc: 'Yleisöön tulevat asiakkaat, joiden asiakkuus kehittyy samalla tavalla kuin Lauralla.',
+          rows: [['Säännöt', 'Taso laskenut Kulta → Hopea 90 pv sisällä · ostoväli yli 30 pv · reagoi hintatarjouksiin'], ['Koko', '1 240 asiakasta'], ['Synkronointi', 'Meta, Google Ads, TikTok, Klaviyo'], ['Päivitys', 'Päivittäin klo 06.00']],
+          confirm: 'Luo kohdeyleisö', doneText: 'Kohdeyleisö "Hiipuvat entiset Kulta-asiakkaat" luotu (1 240 asiakasta).' },
+        lookalike: { title: 'Luo look-alike-yleisö Lauran profiilista', desc: 'Mainoskanavat etsivät uusia ihmisiä, jotka muistuttavat Lauran kaltaisia asiakkaita silloin, kun he olivat parhaimmillaan.',
+          rows: [['Lähdeyleisö', '1 240 vastaavaa asiakasta, Kulta-tason aikainen käytös'], ['Samankaltaisuus', laP + ' % · Suomi'], ['Arvioitu koko', laSz], ['Kanavat', 'Meta, Google Ads, TikTok']],
+          confirm: 'Luo look-alike-yleisö', doneText: 'Look-alike-yleisö (' + laP + ' %) luotu. Valmis kampanjakäyttöön noin 24 tunnissa.' }
+      };
+    };
+    var actKey = st.act || null;
+    var laPct = st.la || '1';
+    var laSize = { '1': '≈ 45 000 henkilöä', '3': '≈ 135 000 henkilöä', '5': '≈ 225 000 henkilöä' };
+    var DEFS = ACTDEFS(laSize[laPct], laPct);
+    var actBtns = [['action', 'Luo toimenpide'], ['audience', 'Luo kohdeyleisö'], ['lookalike', 'Luo look-alike-yleisö']].map(function (b) {
+      var on = b[0] === actKey;
+      return { label: b[1], on: on, isA: b[0] === 'action', isB: b[0] === 'audience', isC: b[0] === 'lookalike',
+        pick: function () { self.setState({ act: on ? null : b[0], done: false }); },
+        style: 'display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 15px; border: 2px solid #111218; ' + (on ? 'background: #111218; color: #FFFFFF' : 'background: #FFFFFF; color: #111218') };
+    });
+    var laOpts = ['1', '3', '5'].map(function (p) {
+      var on = p === laPct;
+      return { label: p + ' %', on: on, pick: function () { self.setState({ la: p, done: false }); },
+        style: 'min-height: 44px; min-width: 56px; padding: 0 14px; border-radius: 999px; cursor: pointer; font-weight: 700; border: 2px solid ' + (on ? '#2447D6' : '#C9CCDA') + '; background: ' + (on ? '#E6EBFF' : '#FFFFFF') + '; color: ' + (on ? '#1D3FC4' : '#111218') };
+    });
+    var dd = actKey ? DEFS[actKey] : null;
+    var act = { open: !!dd, title: dd ? dd.title : '', desc: dd ? dd.desc : '',
+      rows: dd ? dd.rows.map(function (r) { return { k: r[0], v: r[1] }; }) : [],
+      isLa: actKey === 'lookalike', done: !!(dd && st.done), notDone: !!(dd && !st.done),
+      confirmLabel: dd ? dd.confirm : '', doneText: dd ? dd.doneText : '', context: DEFS.context,
+      confirm: function () { self.setState({ done: true }); },
+      close: function () { self.setState({ act: null, done: false }); } };
+    return {
+      actBtns: actBtns, laOpts: laOpts, act: act,
+      idx: idx, color: color,
+      onScrub: function (e) { self.setState({ idx: clamp(parseInt(e.target.value, 10) || 0) }); },
+      prev: function () { self.setState({ idx: clamp(idx - 1) }); },
+      next: function () { self.setState({ idx: clamp(idx + 1) }); },
+      goNow: function () { self.setState({ idx: NOW }); },
+      showWb: function () { self.setState({ scen: 'winback', idx: 14 }); },
+      scenarios: scenarios, events: events, drivers: drivers, qLabels: qLabels,
+      legendF: 'width: 16px; height: 0; border-top: 3px dashed ' + color,
+      legendB: 'width: 16px; height: 10px; border-radius: 3px; background: ' + color + '; opacity: 0.25',
+      clvStyle: 'font-family: \'Space Grotesk\', sans-serif; font-size: 32px; font-weight: 700; color: ' + (wb ? '#1D3FC4' : '#A3360F'),
+      sc: wb
+        ? { clv: '296 €', clvNote: '+197 € verrattuna ilman toimenpiteitä', churnEnd: '14 %', next: 'Pe 27.11. klo 11–13', nextNote: 'Crispy kana-ateria · todennäköisyys 64 %' }
+        : { clv: '99 €', clvNote: 'Laskee 62 % edellisestä 12 kk:sta', churnEnd: '90 %', next: 'Ei näköpiirissä', nextNote: 'Ostotodennäköisyys 30 pv sisällä 19 %' },
+      chart: {
+        past: pastPath, pastArea: pastPath + ' L' + X(NOW).toFixed(1) + ' 200 L0 200 Z', future: futPath, band: bandPath,
+        nowX: X(NOW).toFixed(1), futureW: (600 - X(NOW)).toFixed(1), selX: X(idx).toFixed(1), selColor: selColor,
+        nowLabel: 'position: absolute; top: 4px; left: ' + (NOW / 15 * 100).toFixed(2) + '%; transform: translateX(-50%); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; background: #111218; color: #FFFFFF; padding: 3px 8px; border-radius: 999px',
+        dot: 'position: absolute; left: ' + leftPct + '%; top: ' + topPx + 'px; width: 18px; height: 18px; transform: translate(-50%, -50%); border-radius: 999px; background: ' + selColor + '; border: 3px solid #FFFFFF; box-shadow: 0 2px 8px rgba(17,18,24,0.3); box-sizing: border-box',
+        bubble: 'position: absolute; left: ' + leftPct + '%; top: ' + (parseFloat(topPx) - 40).toFixed(1) + 'px; transform: translateX(-50%); font-size: 13px; font-weight: 700; background: ' + selColor + '; color: #FFFFFF; padding: 4px 10px; border-radius: 8px; white-space: nowrap',
+        aria: 'Lauran kulutus neljänneksittäin Q1/2024–Q4/2027. Toteutunut: ' + past.join(', ') + ' €. Ennuste: ' + fut.join(', ') + ' €.'
+      },
+      sel: {
+        quarter: Q[idx].full,
+        status: idx === NOW ? 'Nyt · kuluva neljännes' : (isFuture ? 'Ennuste · luottamus ' + conf[idx - NOW - 1] + ' %' : 'Toteutunut'),
+        statusStyle: 'font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; ' + (isFuture ? (wb ? 'background: #E6EBFF; color: #1D3FC4' : 'background: #FDE9E1; color: #A3360F') : 'background: #111218; color: #FFFFFF'),
+        story: story,
+        spend: (isFuture ? '≈ ' : '') + eur(spend[idx]),
+        visits: (isFuture ? '≈ ' : '') + visits[idx],
+        avg: fmt2(spend[idx] / visits[idx]),
+        tier: tiers[idx],
+        cum: eur(cum),
+        churn: churn[idx] + ' %',
+        meal: MEALS[fav[idx]]
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
