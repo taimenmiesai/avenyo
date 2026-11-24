@@ -19,7 +19,7 @@ button{font:inherit}
 <div style="min-height: 100vh; background: #F4F2EE; color: #111218; font-family: Inter, system-ui, sans-serif; box-sizing: border-box">
 
 <header style="background: #111218; color: #FFFFFF">
-<div style="max-width: 1320px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
+<div style="position: relative; max-width: 1320px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
 <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap">
 <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 0.12em">AVENYO</div>
 <div style="font-size: 13px; color: #B8BAC4">Asiakasdatan käyttöjärjestelmä</div>
@@ -32,7 +32,106 @@ button{font:inherit}
 <a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Kampanjat</a>
 <a href="#" style="color: #D6D7DD; text-decoration: none; font-size: 14px; padding: 10px 14px">Raportit</a>
 </nav>
-<div style="font-size: 13px; color: #D6D7DD; border: 1px solid #3A3C47; border-radius: 999px; padding: 10px 14px">1.–30.11.2026</div>
+<button type="button" onClick="{{ dp.toggle }}" aria-expanded="{{ dp.open }}" aria-haspopup="dialog" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 14px; border-radius: 12px; border: 1px solid #4A4C58; background: #1D1F29; color: #FFFFFF; cursor: pointer; text-align: left; font: inherit">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4"></path><path d="M16 3v4"></path></svg>
+<span style="display: flex; flex-direction: column; line-height: 1.25">
+<span style="font-size: 11px; color: #B8BAC4">{{ dp.presetLabel }}</span>
+<span style="font-size: 14px; font-weight: 600">{{ dp.label }}</span>
+<sc-if value="{{ dp.cmpOn }}" hint-placeholder-val="{{ true }}">
+<span style="font-size: 12px; color: #F5A98A">vs. {{ dp.cmpLabel }}</span>
+</sc-if>
+</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{ dp.open }}" hint-placeholder-val="{{ false }}">
+<button type="button" aria-label="Sulje aikavälin valinta" onClick="{{ dp.close }}" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(17,18,24,0.18); border: 0; z-index: 40; cursor: default"></button>
+<div role="dialog" aria-label="Valitse aikaväli" style="position: absolute; top: calc(100% - 4px); right: 16px; z-index: 50; width: 700px; max-width: calc(100% - 32px); background: #FFFFFF; color: #111218; border-radius: 16px; box-shadow: 0 24px 64px rgba(17,18,24,0.30); display: flex; flex-wrap: wrap; overflow: hidden; font-family: Inter, system-ui, sans-serif">
+
+<div style="flex: 1 1 230px; min-width: 0; border-right: 1px solid #ECEAE4; display: flex; flex-direction: column">
+<div style="padding: 8px 0; display: flex; flex-direction: column; max-height: 470px; overflow-y: auto">
+<sc-for list="{{ dp.presets }}" as="p" hint-placeholder-count="14">
+<button type="button" onClick="{{ p.pick }}" aria-pressed="{{ p.on }}" style="{{ p.style }}">{{ p.label }}</button>
+</sc-for>
+</div>
+<div style="border-top: 1px solid #ECEAE4; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<span id="vertaa-otsikko" style="font-size: 14px; font-weight: 600">Vertaa</span>
+<button type="button" role="switch" aria-checked="{{ dp.dCmpOn }}" aria-labelledby="vertaa-otsikko" onClick="{{ dp.toggleCmp }}" style="{{ dp.switchStyle }}"><span style="{{ dp.knobStyle }}"></span></button>
+</div>
+<sc-if value="{{ dp.dCmpOn }}" hint-placeholder-val="{{ false }}">
+<div role="group" aria-label="Vertailujakso" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{ dp.modes }}" as="m" hint-placeholder-count="3">
+<button type="button" onClick="{{ m.pick }}" aria-pressed="{{ m.on }}" style="{{ m.style }}">{{ m.label }}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+
+<div style="flex: 999 1 380px; min-width: 0; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: flex-end; gap: 8px">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<label for="dp-alku" style="font-size: 12px; font-weight: 600; color: #1D3FC4">Alkamispäivä</label>
+<input id="dp-alku" type="text" inputmode="numeric" value="{{ dp.fStart.value }}" onFocus="{{ dp.fStart.focus }}" onChange="{{ dp.fStart.change }}" style="{{ dp.fStart.style }}">
+</div>
+<span aria-hidden="true" style="padding-bottom: 12px; color: #5B5D66">–</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<label for="dp-loppu" style="font-size: 12px; font-weight: 600; color: #1D3FC4">Päättymispäivä</label>
+<input id="dp-loppu" type="text" inputmode="numeric" value="{{ dp.fEnd.value }}" onFocus="{{ dp.fEnd.focus }}" onChange="{{ dp.fEnd.change }}" style="{{ dp.fEnd.style }}">
+</div>
+</div>
+<sc-if value="{{ dp.dCmpOn }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: flex-end; gap: 8px">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<label for="dp-valku" style="font-size: 12px; font-weight: 600; color: #A3360F">Vertailu alkaa</label>
+<input id="dp-valku" type="text" inputmode="numeric" value="{{ dp.fCs.value }}" onFocus="{{ dp.fCs.focus }}" onChange="{{ dp.fCs.change }}" style="{{ dp.fCs.style }}">
+</div>
+<span aria-hidden="true" style="padding-bottom: 12px; color: #5B5D66">–</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<label for="dp-vloppu" style="font-size: 12px; font-weight: 600; color: #A3360F">Vertailu päättyy</label>
+<input id="dp-vloppu" type="text" inputmode="numeric" value="{{ dp.fCe.value }}" onFocus="{{ dp.fCe.focus }}" onChange="{{ dp.fCe.change }}" style="{{ dp.fCe.style }}">
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); width: 100%; max-width: 308px; gap: 0; font-size: 12px; font-weight: 600; color: #5B5D66; text-align: center">
+<span>M</span><span>T</span><span>K</span><span>T</span><span>P</span><span>L</span><span>S</span>
+</div>
+<div style="display: flex; gap: 4px">
+<button type="button" onClick="{{ dp.prevMonth }}" aria-label="Aiempi kuukausi" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid #D9D6CE; background: #FFFFFF; cursor: pointer; color: #111218; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg></button>
+<button type="button" onClick="{{ dp.nextMonth }}" disabled="{{ dp.noNext }}" aria-label="Seuraava kuukausi" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid #D9D6CE; background: #FFFFFF; cursor: pointer; color: #111218; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+</div>
+</div>
+
+<sc-for list="{{ dp.months }}" as="mo" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: #3A3C47">{{ mo.title }}</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); max-width: 308px; gap: 2px 0">
+<sc-for list="{{ mo.cells }}" as="c" hint-placeholder-count="30">
+<sc-if value="{{ c.blank }}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+<sc-if value="{{ c.real }}" hint-placeholder-val="{{ true }}">
+<span style="{{ c.wrap }}"><button type="button" onClick="{{ c.pick }}" disabled="{{ c.disabled }}" aria-label="{{ c.aria }}" aria-pressed="{{ c.sel }}" style="{{ c.btn }}">{{ c.d }}</button></span>
+</sc-if>
+</sc-for>
+</div>
+</div>
+</sc-for>
+
+<div style="border-top: 1px solid #ECEAE4; padding-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between">
+<div style="font-size: 12px; color: #5B5D66; line-height: 1.4">
+<div style="font-weight: 600; color: #111218">{{ dp.draftLabel }}</div>
+<div>{{ dp.draftCmp }}</div>
+</div>
+<div style="display: flex; gap: 8px">
+<button type="button" onClick="{{ dp.close }}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: transparent; color: #1D3FC4; cursor: pointer; font-weight: 600">Peru</button>
+<button type="button" onClick="{{ dp.apply }}" style="min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: #2447D6; color: #FFFFFF; cursor: pointer; font-weight: 700">Käytä</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
 </div>
 </header>
 
@@ -366,7 +465,162 @@ class Component extends DCLogic {
       confirmLabel: dd ? dd.confirm : '', doneText: dd ? dd.doneText : '', context: DEFS.context,
       confirm: function () { self.setState({ done: true }); },
       close: function () { self.setState({ act: null, done: false }); } };
+    var dp = (function () {
+      var DAY = 864e5;
+      var mk = function (y, m, d) { return Math.round(Date.UTC(y, m - 1, d) / DAY); };
+      var parts = function (n) { var t = new Date(n * DAY); return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate(), wd: (t.getUTCDay() + 6) % 7 }; };
+      var T = mk(2026, 11, 24);
+      var tp = parts(T);
+      var fmt = function (n) { var p = parts(n); return p.d + '.' + p.m + '.' + p.y; };
+      var fmtR = function (a, b) {
+        var A1 = parts(a), B1 = parts(b);
+        if (a === b) return fmt(a);
+        if (A1.y === B1.y && A1.m === B1.m) return A1.d + '.–' + B1.d + '.' + B1.m + '.' + B1.y;
+        if (A1.y === B1.y) return A1.d + '.' + A1.m + '.–' + B1.d + '.' + B1.m + '.' + B1.y;
+        return fmt(a) + '–' + fmt(b);
+      };
+      var parse = function (s) {
+        var m = /^\s*(\d{1,2})\.(\d{1,2})\.(\d{4})\s*$/.exec(s || '');
+        if (!m) return null;
+        var n = mk(+m[3], +m[2], +m[1]); var p = parts(n);
+        return (p.d === +m[1] && p.m === +m[2]) ? n : null;
+      };
+      var lastOfMonth = function (y, m) { return mk(y, m + 1, 1) - 1; };
+      var qStart = Math.floor((tp.m - 1) / 3) * 3 + 1;
+      var prevM = tp.m === 1 ? { y: tp.y - 1, m: 12 } : { y: tp.y, m: tp.m - 1 };
+      var PRESETS = [
+        ['custom', 'Oma', null],
+        ['today', 'Tänään', [T, T]],
+        ['yesterday', 'Eilen', [T - 1, T - 1]],
+        ['thisWeek', 'Tällä viikolla (ma–tänään)', [T - tp.wd, T]],
+        ['last7', '7 viime päivän aikana', [T - 7, T - 1]],
+        ['lastWeek', 'Viime viikko (ma–su)', [T - tp.wd - 7, T - tp.wd - 1]],
+        ['last28', '28 viime päivän aikana', [T - 28, T - 1]],
+        ['last30', '30 viime päivän aikana', [T - 30, T - 1]],
+        ['thisMonth', 'Tämä kuukausi', [mk(tp.y, tp.m, 1), T]],
+        ['lastMonth', 'Viime kuukausi', [mk(prevM.y, prevM.m, 1), lastOfMonth(prevM.y, prevM.m)]],
+        ['last90', '90 viime päivän aikana', [T - 90, T - 1]],
+        ['qtd', 'Neljänneksen alusta', [mk(tp.y, qStart, 1), T]],
+        ['ytd', 'Tämä vuosi (tammikuusta kuluvaan päivään)', [mk(tp.y, 1, 1), T]],
+        ['lastYear', 'Edellinen kalenterivuosi', [mk(tp.y - 1, 1, 1), mk(tp.y - 1, 12, 31)]]
+      ];
+      var byKey = {};
+      PRESETS.forEach(function (p) { byKey[p[0]] = p; });
+      var shiftYear = function (n) { var p = parts(n); var d = Math.min(p.d, parts(lastOfMonth(p.y - 1, p.m)).d); return mk(p.y - 1, p.m, d); };
+      var cmpOf = function (s) {
+        if (s.cmpMode === 'prevYear') return [shiftYear(s.start), shiftYear(s.end)];
+        if (s.cmpMode === 'custom' && s.cs != null) return [s.cs, s.ce];
+        var L = s.end - s.start + 1;
+        return [s.start - L, s.start - 1];
+      };
+      var A = st.dpA || { preset: 'thisMonth', start: byKey.thisMonth[2][0], end: T, cmpOn: true, cmpMode: 'prevYear', cs: null, ce: null };
+      var open = !!st.dpOpen;
+      var D = st.dpD || A;
+      var picking = st.dpPick || 'start';
+      var monthIdx = function (n) { var p = parts(n); return p.y * 12 + p.m - 1; };
+      var maxView = monthIdx(T) - 1;
+      var view = (typeof st.dpView === 'number') ? st.dpView : Math.min(maxView, monthIdx(D.end) - 1);
+      var setD = function (patch, extra) { self.setState(Object.assign({ dpD: Object.assign({}, D, patch) }, extra || {})); };
+      var aCmp = cmpOf(A);
+      var dCmp = cmpOf(D);
+      var MONTHS = ['TAMMIKUU', 'HELMIKUU', 'MAALISKUU', 'HUHTIKUU', 'TOUKOKUU', 'KESÄKUU', 'HEINÄKUU', 'ELOKUU', 'SYYSKUU', 'LOKAKUU', 'MARRASKUU', 'JOULUKUU'];
+      var months = [view, view + 1].map(function (mi) {
+        var y = Math.floor(mi / 12), m = mi % 12 + 1;
+        var first = mk(y, m, 1), last = lastOfMonth(y, m);
+        var cells = [];
+        for (var b = 0; b < parts(first).wd; b++) cells.push({ blank: true, real: false });
+        for (var n0 = first; n0 <= last; n0++) {
+          (function (n) {
+            var inR = n >= D.start && n <= D.end;
+            var isS = n === D.start, isE = n === D.end;
+            var inC = D.cmpOn && n >= dCmp[0] && n <= dCmp[1];
+            var cEnd = D.cmpOn && (n === dCmp[0] || n === dCmp[1]);
+            var dis = n > T;
+            var wrap = 'display: flex; justify-content: center; height: 36px; ';
+            if (inR) wrap += 'background: #E6EBFF; border-radius: ' + (isS && isE ? '999px' : isS ? '999px 0 0 999px' : isE ? '0 999px 999px 0' : '0') + '; ';
+            if (inC) wrap += 'box-shadow: inset 0 -3px 0 #D9481F; ';
+            var btn = 'width: 36px; height: 36px; border-radius: 999px; border: 0; font-size: 13px; padding: 0; ' + (dis ? 'cursor: default; ' : 'cursor: pointer; ');
+            if (isS || isE) btn += 'background: #2447D6; color: #FFFFFF; font-weight: 700';
+            else if (cEnd) btn += 'background: #D9481F; color: #FFFFFF; font-weight: 700';
+            else btn += 'background: transparent; color: ' + (dis ? '#9EA1AC' : '#111218') + (n === T ? '; box-shadow: inset 0 0 0 1.5px #111218; font-weight: 700' : '');
+            cells.push({ blank: false, real: true, d: parts(n).d, disabled: dis, sel: isS || isE, aria: fmt(n), wrap: wrap, btn: btn,
+              pick: function () {
+                if (dis) return;
+                if (picking === 'cs' || picking === 'ce') {
+                  var cs = D.cs != null ? D.cs : dCmp[0], ce = D.ce != null ? D.ce : dCmp[1];
+                  if (picking === 'cs') setD({ cmpMode: 'custom', cs: n, ce: Math.max(n, ce) }, { dpPick: 'ce', dpTxt: null });
+                  else setD({ cmpMode: 'custom', cs: Math.min(cs, n), ce: Math.max(cs, n) }, { dpPick: 'cs', dpTxt: null });
+                  return;
+                }
+                if (picking === 'start') setD({ preset: 'custom', start: n, end: n }, { dpPick: 'end', dpTxt: null });
+                else if (n < D.start) setD({ preset: 'custom', start: n }, { dpPick: 'end', dpTxt: null });
+                else setD({ preset: 'custom', end: n }, { dpPick: 'start', dpTxt: null });
+              } });
+          })(n0);
+        }
+        return { title: MONTHS[m - 1] + ' ' + y, cells: cells };
+      });
+      var presets = PRESETS.map(function (p) {
+        var on = D.preset === p[0];
+        return { label: p[1], on: on,
+          pick: function () {
+            if (p[2]) setD({ preset: p[0], start: p[2][0], end: p[2][1] }, { dpPick: 'start', dpTxt: null, dpView: Math.min(maxView, monthIdx(p[2][1]) - 1) });
+            else setD({ preset: 'custom' });
+          },
+          style: 'display: block; width: 100%; text-align: left; border: 0; padding: 10px 18px; font-size: 14px; line-height: 1.3; cursor: pointer; color: #111218; min-height: 40px; ' + (on ? 'background: #E6EBFF; font-weight: 600' : 'background: transparent') };
+      });
+      var modes = [['prevPeriod', 'Edellinen jakso'], ['prevYear', 'Edellinen vuosi'], ['custom', 'Oma']].map(function (m) {
+        var on = D.cmpMode === m[0];
+        return { label: m[1], on: on,
+          pick: function () { setD({ cmpMode: m[0] }, { dpPick: m[0] === 'custom' ? 'cs' : 'start', dpTxt: null }); },
+          style: 'min-height: 36px; padding: 0 12px; border-radius: 999px; font-size: 13px; cursor: pointer; font-weight: 600; border: 1.5px solid ' + (on ? '#D9481F' : '#D9D6CE') + '; background: ' + (on ? '#FDE9E1' : '#FFFFFF') + '; color: ' + (on ? '#A3360F' : '#111218') };
+      });
+      var draft = st.dpTxt || {};
+      var field = function (key, val, active, color) {
+        return { value: draft[key] != null ? draft[key] : fmt(val),
+          style: 'width: 100%; box-sizing: border-box; height: 44px; padding: 0 12px; font: inherit; font-size: 14px; border-radius: 8px; outline: none; border: ' + (active ? '2px solid ' + color : '1px solid #C9CCDA') + '; color: #111218; background: #FFFFFF',
+          focus: function () { if (picking !== key) self.setState({ dpPick: key }); },
+          change: function (e) {
+            var txt = e.target.value; var n = parse(txt);
+            var t = Object.assign({}, draft); t[key] = txt;
+            var patch = {};
+            if (n != null && n <= T) {
+              if (key === 'start') patch = { preset: 'custom', start: n, end: Math.max(n, D.end) };
+              if (key === 'end') patch = { preset: 'custom', end: n, start: Math.min(n, D.start) };
+              if (key === 'cs') patch = { cmpMode: 'custom', cs: n, ce: Math.max(n, D.ce != null ? D.ce : dCmp[1]) };
+              if (key === 'ce') patch = { cmpMode: 'custom', ce: n, cs: Math.min(n, D.cs != null ? D.cs : dCmp[0]) };
+            }
+            self.setState({ dpTxt: t, dpD: Object.assign({}, D, patch) });
+          } };
+      };
+      var presetLabel = byKey[A.preset] ? byKey[A.preset][1] : 'Oma';
+      var reset = { dpOpen: false, dpD: null, dpTxt: null, dpView: null, dpPick: 'start' };
+      return {
+        open: open, label: fmtR(A.start, A.end), presetLabel: presetLabel,
+        cmpOn: !!A.cmpOn, cmpOff: !A.cmpOn, cmpLabel: fmtR(aCmp[0], aCmp[1]),
+        eyebrow: (A.preset === 'custom' ? fmtR(A.start, A.end) : presetLabel).toUpperCase(),
+        days: A.end - A.start + 1,
+        presets: presets, modes: modes, months: months,
+        dCmpOn: !!D.cmpOn,
+        fStart: field('start', D.start, picking === 'start', '#2447D6'),
+        fEnd: field('end', D.end, picking === 'end', '#2447D6'),
+        fCs: field('cs', dCmp[0], picking === 'cs', '#D9481F'),
+        fCe: field('ce', dCmp[1], picking === 'ce', '#D9481F'),
+        draftLabel: fmtR(D.start, D.end) + ' · ' + (D.end - D.start + 1) + ' päivää',
+        draftCmp: D.cmpOn ? 'Vertailu: ' + fmtR(dCmp[0], dCmp[1]) : 'Ei vertailua',
+        switchStyle: 'position: relative; width: 44px; height: 26px; border-radius: 999px; border: 0; cursor: pointer; padding: 0; flex: none; background: ' + (D.cmpOn ? '#2447D6' : '#9EA1AC'),
+        knobStyle: 'position: absolute; top: 3px; left: ' + (D.cmpOn ? '21px' : '3px') + '; width: 20px; height: 20px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.3)',
+        toggle: function () { self.setState(open ? reset : Object.assign({}, reset, { dpOpen: true, dpD: A })); },
+        close: function () { self.setState(reset); },
+        apply: function () { self.setState(Object.assign({}, reset, { dpA: D })); },
+        toggleCmp: function () { setD({ cmpOn: !D.cmpOn }, { dpPick: 'start', dpTxt: null }); },
+        prevMonth: function () { self.setState({ dpView: view - 1 }); },
+        nextMonth: function () { self.setState({ dpView: Math.min(maxView, view + 1) }); },
+        noNext: !(view < maxView)
+      };
+    })();
     return {
+      dp: dp,
       actBtns: actBtns, laOpts: laOpts, act: act,
       tabs: tabs, bars: bars, meals: meals, rows: rows, weeks: weeks,
       seg: { label: seg.label, size: seg.size, desc: seg.desc, def: seg.def, campaign: seg.campaign, expected: seg.expected,
